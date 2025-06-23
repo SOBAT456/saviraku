@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz UKOM Analis Kesehatan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #ffe0ec 0%, #c9e7ff 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            padding: 30px 10px 10px 10px;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 2px 10px #ffb6d5;
+            position: relative;
+        }
+        h1 {
+            color: #d72660;
+            margin-bottom: 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+        .lab-icon {
+            width: 70px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .love-anim {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .love {
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            background: url('data:image/svg+xml;utf8,<svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 34S4 22.5 4 13.5C4 8.5 8.5 4 13.5 4C16.5 4 19 6.5 19 6.5C19 6.5 21.5 4 24.5 4C29.5 4 34 8.5 34 13.5C34 22.5 19 34 19 34Z" fill="%23ff6f91" stroke="%23d72660" stroke-width="2"/></svg>') no-repeat center/contain;
+            opacity: 0.85;
+            animation: love-float 3s linear infinite;
+        }
+        @keyframes love-float {
+            0% {transform: translateY(0) scale(1);}
+            50% {transform: translateY(-40px) scale(1.1);}
+            100% {transform: translateY(0) scale(1);}
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto 30px auto;
+            background: rgba(255,255,255,0.92);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 32px #ffb6d5cc;
+        }
+        .question {
+            background: #f7faff;
+            border-left: 8px solid #d72660;
+            border-radius: 10px;
+            padding: 18px 16px 12px 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px #ffe0ec90;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from {opacity:0; transform: translateY(20px);}
+            to {opacity:1; transform: none;}
+        }
+        .question p {
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #2b2d42;
+        }
+        label {
+            display: block;
+            margin-bottom: 7px;
+            cursor: pointer;
+            font-size: 1em;
+            padding-left: 8px;
+        }
+        input[type="radio"] {
+            accent-color: #d72660;
+            margin-right: 7px;
+        }
+        button#submitBtn {
+            display: block;
+            margin: 28px auto 0 auto;
+            padding: 12px 36px;
+            font-size: 1.2em;
+            background: linear-gradient(90deg, #d72660 40%, #ffb6d5 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px #ffb6d580;
+            transition: background 0.2s;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        button#submitBtn:disabled {
+            background: #ffe0ec;
+            color: #d72660;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        button#submitBtn:not(:disabled):hover {
+            background: linear-gradient(90deg, #ffb6d5 20%, #d72660 80%);
+        }
+        #hasil {
+            margin-top: 30px;
+            background: #fff1f8;
+            border-radius: 15px;
+            padding: 24px 18px;
+            box-shadow: 0 2px 8px #ffb6d5a0;
+            animation: fadeIn 1s;
+        }
+        #hasil h2 {
+            color: #d72660;
+        }
+        #hasil h3 {
+            color: #2b2d42;
+        }
+        #hasil p {
+            margin-bottom: 10px;
+        }
+        .benar { color: #43b581; font-weight: bold;}
+        .salah { color: #d72660; font-weight: bold;}
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {padding: 12px 3vw;}
+            .question {padding: 10px 5px;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="love-anim" style="width:160px;height:60px;">
+            <div class="love" style="left:10px; top:10px; animation-delay:0s;"></div>
+            <div class="love" style="left:60px; top:22px; animation-delay:1s;"></div>
+            <div class="love" style="left:110px; top:8px; animation-delay:2s;"></div>
+        </div>
+        
+        <h1>Quiz UKOM Analis Kesehatan</h1>
+        <div style="color:#d72660;font-size:1.1em;margin-top:10px;">AKU SAYANG SAVIRA &#10084;</div>
+    </header>
+    <div class="container">
+    <form id="quizForm">
+        <!-- Soal 1 -->
+        <div class="question">
+            <p>1. Pasien dengan demam tinggi dan leukositosis, hasil kultur darah positif bakteri gram positif kokus berantai. Diagnosis paling mungkin adalah:</p>
+            <label><input type="radio" name="q1" value="a"> Streptococcus pneumoniae</label>
+            <label><input type="radio" name="q1" value="b"> Staphylococcus aureus</label>
+            <label><input type="radio" name="q1" value="c"> Escherichia coli</label>
+            <label><input type="radio" name="q1" value="d"> Pseudomonas aeruginosa</label>
+        </div>
+        <!-- Soal 2 -->
+        <div class="question">
+            <p>2. Pada apusan darah tepi ditemukan target cell. Kelainan hemoglobin yang paling mungkin adalah:</p>
+            <label><input type="radio" name="q2" value="a"> Thalasemia</label>
+            <label><input type="radio" name="q2" value="b"> Anemia defisiensi besi</label>
+            <label><input type="radio" name="q2" value="c"> Anemia sel sabit</label>
+            <label><input type="radio" name="q2" value="d"> Anemia aplastik</label>
+        </div>
+        <!-- Soal 3 -->
+        <div class="question">
+            <p>3. Seorang pasien demam tifoid, hasil Widal O 1/320 dan H 1/640. Interpretasi yang tepat adalah:</p>
+            <label><input type="radio" name="q3" value="a"> Infeksi Salmonella akut</label>
+            <label><input type="radio" name="q3" value="b"> Infeksi Salmonella masa lalu</label>
+            <label><input type="radio" name="q3" value="c"> Reaksi silang dengan bakteri lain</label>
+            <label><input type="radio" name="q3" value="d"> Vaksinasi sebelumnya</label>
+        </div>
+        <!-- Soal 4 -->
+        <div class="question">
+            <p>4. Hasil Gram pada cairan serebrospinal: diplokokus gram negatif. Bakteri tersering penyebab meningitis pada dewasa adalah:</p>
+            <label><input type="radio" name="q4" value="a"> Neisseria meningitidis</label>
+            <label><input type="radio" name="q4" value="b"> Streptococcus pneumoniae</label>
+            <label><input type="radio" name="q4" value="c"> Haemophilus influenzae</label>
+            <label><input type="radio" name="q4" value="d"> Escherichia coli</label>
+        </div>
+        <!-- Soal 5 -->
+        <div class="question">
+            <p>5. Seorang pasien anemia, MCV &lt; 80 fL, kadar besi serum rendah, TIBC meningkat. Diagnosis paling mungkin:</p>
+            <label><input type="radio" name="q5" value="a"> Anemia defisiensi besi</label>
+            <label><input type="radio" name="q5" value="b"> Anemia megaloblastik</label>
+            <label><input type="radio" name="q5" value="c"> Anemia hemolitik</label>
+            <label><input type="radio" name="q5" value="d"> Anemia aplastik</label>
+        </div>
+        <!-- Soal 6 -->
+        <div class="question">
+            <p>6. Seorang anak demam, faringitis, hasil kultur swab: bakteri gram positif kokus berantai, beta hemolisis. Diagnosis:</p>
+            <label><input type="radio" name="q6" value="a"> Streptococcus pyogenes</label>
+            <label><input type="radio" name="q6" value="b"> Streptococcus pneumoniae</label>
+            <label><input type="radio" name="q6" value="c"> Staphylococcus aureus</label>
+            <label><input type="radio" name="q6" value="d"> Neisseria gonorrhoeae</label>
+        </div>
+        <!-- Soal 7 -->
+        <div class="question">
+            <p>7. Pemeriksaan darah tepi: peningkatan jumlah neutrofil band, paling sering ditemukan pada:</p>
+            <label><input type="radio" name="q7" value="a"> Infeksi bakteri akut</label>
+            <label><input type="radio" name="q7" value="b"> Infeksi virus</label>
+            <label><input type="radio" name="q7" value="c"> Anemia hemolitik</label>
+            <label><input type="radio" name="q7" value="d"> Leukemia limfositik</label>
+        </div>
+        <!-- Soal 8 -->
+        <div class="question">
+            <p>8. Luka bernanah, hasil kultur: bakteri gram negatif batang, oksidase positif, tumbuh pada MacConkey, koloni tidak fermentasi laktosa. Bakteri kemungkinan:</p>
+            <label><input type="radio" name="q8" value="a"> Pseudomonas aeruginosa</label>
+            <label><input type="radio" name="q8" value="b"> Escherichia coli</label>
+            <label><input type="radio" name="q8" value="c"> Klebsiella pneumoniae</label>
+            <label><input type="radio" name="q8" value="d"> Salmonella typhi</label>
+        </div>
+        <!-- Soal 9 -->
+        <div class="question">
+            <p>9. Pemeriksaan darah: Hb 6 g/dL, retikulosit &gt; 4%, LDH tinggi, bilirubin tidak terkonjugasi tinggi. Diagnosis:</p>
+            <label><input type="radio" name="q9" value="a"> Anemia hemolitik</label>
+            <label><input type="radio" name="q9" value="b"> Anemia defisiensi besi</label>
+            <label><input type="radio" name="q9" value="c"> Anemia aplastik</label>
+            <label><input type="radio" name="q9" value="d"> Anemia megaloblastik</label>
+        </div>
+        <!-- Soal 10 -->
+        <div class="question">
+            <p>10. Leukositosis, ditemukan sel blast &gt; 20% pada darah tepi. Diagnosis tersering:</p>
+            <label><input type="radio" name="q10" value="a"> Leukemia akut</label>
+            <label><input type="radio" name="q10" value="b"> Leukemia kronik</label>
+            <label><input type="radio" name="q10" value="c"> Limfoma</label>
+            <label><input type="radio" name="q10" value="d"> Polisitemia vera</label>
+        </div>
+        <!-- Soal 11 -->
+        <div class="question">
+            <p>11. Pasien demam, batuk, sputum kental, hasil Gram: kokus gram positif berpasangan. Diagnosis kemungkinan:</p>
+            <label><input type="radio" name="q11" value="a"> Streptococcus pneumoniae</label>
+            <label><input type="radio" name="q11" value="b"> Staphylococcus aureus</label>
+            <label><input type="radio" name="q11" value="c"> Klebsiella pneumoniae</label>
+            <label><input type="radio" name="q11" value="d"> Haemophilus influenzae</label>
+        </div>
+        <!-- Soal 12 -->
+        <div class="question">
+            <p>12. Pemeriksaan darah: trombositopenia, PT dan aPTT memanjang, D-dimer tinggi. Diagnosis paling mungkin:</p>
+            <label><input type="radio" name="q12" value="a"> DIC (Disseminated Intravascular Coagulation)</label>
+            <label><input type="radio" name="q12" value="b"> ITP</label>
+            <label><input type="radio" name="q12" value="c"> Hemofilia A</label>
+            <label><input type="radio" name="q12" value="d"> TTP</label>
+        </div>
+        <!-- Soal 13 -->
+        <div class="question">
+            <p>13. Pasien luka bakar, hasil kultur: bakteri gram positif kokus, koagulase positif. Diagnosis:</p>
+            <label><input type="radio" name="q13" value="a"> Staphylococcus aureus</label>
+            <label><input type="radio" name="q13" value="b"> Streptococcus pyogenes</label>
+            <label><input type="radio" name="q13" value="c"> Enterococcus faecalis</label>
+            <label><input type="radio" name="q13" value="d"> Staphylococcus epidermidis</label>
+        </div>
+        <!-- Soal 14 -->
+        <div class="question">
+            <p>14. Pemeriksaan darah: MCV &gt; 100 fL, hipersegmentasi neutrofil, anemia. Diagnosis:</p>
+            <label><input type="radio" name="q14" value="a"> Anemia megaloblastik</label>
+            <label><input type="radio" name="q14" value="b"> Anemia defisiensi besi</label>
+            <label><input type="radio" name="q14" value="c"> Anemia aplastik</label>
+            <label><input type="radio" name="q14" value="d"> Anemia hemolitik</label>
+        </div>
+        <!-- Soal 15 -->
+        <div class="question">
+            <p>15. Demam, hasil kultur urine: bakteri gram negatif batang, fermentasi laktosa positif. Diagnosis kemungkinan:</p>
+            <label><input type="radio" name="q15" value="a"> Escherichia coli</label>
+            <label><input type="radio" name="q15" value="b"> Pseudomonas aeruginosa</label>
+            <label><input type="radio" name="q15" value="c"> Salmonella typhi</label>
+            <label><input type="radio" name="q15" value="d"> Shigella dysenteriae</label>
+        </div>
+        <!-- Soal 16 -->
+        <div class="question">
+            <p>16. Pemeriksaan darah: limfositosis, sel atipikal ditemukan. Diagnosis paling mungkin:</p>
+            <label><input type="radio" name="q16" value="a"> Infeksi virus (misal mononukleosis)</label>
+            <label><input type="radio" name="q16" value="b"> Infeksi bakteri</label>
+            <label><input type="radio" name="q16" value="c"> Anemia aplastik</label>
+            <label><input type="radio" name="q16" value="d"> Leukemia mielositik kronik</label>
+        </div>
+        <!-- Soal 17 -->
+        <div class="question">
+            <p>17. Perdarahan, waktu perdarahan memanjang, waktu pembekuan normal. Diagnosis kemungkinan:</p>
+            <label><input type="radio" name="q17" value="a"> Trombositopati</label>
+            <label><input type="radio" name="q17" value="b"> Hemofilia A</label>
+            <label><input type="radio" name="q17" value="c"> DIC</label>
+            <label><input type="radio" name="q17" value="d"> Defisiensi faktor X</label>
+        </div>
+        <!-- Soal 18 -->
+        <div class="question">
+            <p>18. Kultur sputum: bakteri gram negatif diplokokus, oksidase positif. Diagnosis kemungkinan:</p>
+            <label><input type="radio" name="q18" value="a"> Neisseria gonorrhoeae</label>
+            <label><input type="radio" name="q18" value="b"> Neisseria meningitidis</label>
+            <label><input type="radio" name="q18" value="c"> Moraxella catarrhalis</label>
+            <label><input type="radio" name="q18" value="d"> Haemophilus influenzae</label>
+        </div>
+        <!-- Soal 19 -->
+        <div class="question">
+            <p>19. Anemia, ditemukan sferosit pada apusan darah. Diagnosis kemungkinan:</p>
+            <label><input type="radio" name="q19" value="a"> Hereditary spherocytosis</label>
+            <label><input type="radio" name="q19" value="b"> Thalasemia</label>
+            <label><input type="radio" name="q19" value="c"> Anemia aplastik</label>
+            <label><input type="radio" name="q19" value="d"> Anemia megaloblastik</label>
+        </div>
+        <!-- Soal 20 -->
+        <div class="question">
+            <p>20. Infeksi saluran kemih berulang, kultur: bakteri gram negatif, urease positif, membentuk batu struvit. Diagnosis kemungkinan:</p>
+            <label><input type="radio" name="q20" value="a"> Proteus mirabilis</label>
+            <label><input type="radio" name="q20" value="b"> Escherichia coli</label>
+            <label><input type="radio" name="q20" value="c"> Klebsiella pneumoniae</label>
+            <label><input type="radio" name="q20" value="d"> Pseudomonas aeruginosa</label>
+        </div>
+        <button type="submit" id="submitBtn" disabled>Selesai</button>
+    </form>
+    <div id="hasil"></div>
+    </div>
+    <script>
+        // Kunci jawaban untuk 20 soal
+        const kunciJawaban = {
+            q1: 'a',  // Streptococcus pneumoniae
+            q2: 'a',  // Thalasemia
+            q3: 'a',  // Infeksi Salmonella akut
+            q4: 'a',  // Neisseria meningitidis
+            q5: 'a',  // Anemia defisiensi besi
+            q6: 'a',  // Streptococcus pyogenes
+            q7: 'a',  // Infeksi bakteri akut
+            q8: 'a',  // Pseudomonas aeruginosa
+            q9: 'a',  // Anemia hemolitik
+            q10: 'a', // Leukemia akut
+            q11: 'a', // Streptococcus pneumoniae
+            q12: 'a', // DIC
+            q13: 'a', // Staphylococcus aureus
+            q14: 'a', // Anemia megaloblastik
+            q15: 'a', // Escherichia coli
+            q16: 'a', // Infeksi virus
+            q17: 'a', // Trombositopati
+            q18: 'c', // Moraxella catarrhalis
+            q19: 'a', // Hereditary spherocytosis
+            q20: 'a', // Proteus mirabilis
+        };
+
+        function cekSemuaTerjawab() {
+            const totalSoal = 20;
+            let terjawab = 0;
+            for (let i = 1; i <= totalSoal; i++) {
+                const radios = document.getElementsByName('q' + i);
+                let soalTerjawab = false;
+                for (const radio of radios) {
+                    if (radio.checked) {
+                        soalTerjawab = true;
+                        break;
+                    }
+                }
+                if (soalTerjawab) terjawab++;
+            }
+            return terjawab === totalSoal;
+        }
+
+        document.getElementById('quizForm').addEventListener('change', () => {
+            document.getElementById('submitBtn').disabled = !cekSemuaTerjawab();
+        });
+
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const totalSoal = 20;
+            let hasilHTML = '<h2>Hasil Quiz</h2>';
+
+            for (let i = 1; i <= totalSoal; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                const jawaban = selectedOption ? selectedOption.value : '-';
+                const kunci = kunciJawaban['q' + i] || '-';
+                const status = jawaban === kunci ? '<span class="benar">Benar &#10084;&#65039;</span>' : '<span class="salah">Salah &#10060;</span>';
+                if (jawaban === kunci) score++;
+                hasilHTML += `
+                    <p>
+                        <strong>Soal ${i}:</strong><br>
+                        Jawaban Anda: <b>${jawaban.toUpperCase()}</b> ${status}<br>
+                        Kunci Jawaban: <b>${kunci.toUpperCase()}</b>
+                    </p>
+                `;
+            }
+            const persentase = Math.round((score / totalSoal) * 100);
+            hasilHTML += `<h3>Skor Akhir: <span style="color:#d72660;">${score}/${totalSoal}</span> (<span style="color:#43b581;">${persentase}%</span>)</h3>`;
+            document.getElementById('hasil').innerHTML = hasilHTML;
+            document.getElementById('submitBtn').disabled = true;
+            window.scrollTo({top: document.getElementById('hasil').offsetTop-40, behavior:'smooth'});
+        });
+    </script>
+</body>
+</html>
